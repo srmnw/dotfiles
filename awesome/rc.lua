@@ -24,6 +24,7 @@ local has_fdo, freedesktop = pcall(require, "freedesktop")
 
 -- CUSTOM requires
 local switcher = require("awesome-switcher")
+local xrandr = require("xrandr")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -253,9 +254,19 @@ root.buttons(gears.table.join(
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
-    awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
+    awful.key({ modkey,           }, "Left",
+    		function()
+			for i = 1, screen:count() do
+				awful.tag.viewprev(screen[i])
+			end
+		end,
               {description = "view previous", group = "tag"}),
-    awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
+    awful.key({ modkey,           }, "Right",
+    		function()
+			for i = 1, screen:count() do
+				awful.tag.viewnext(screen[i])
+			end
+		end,
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
@@ -393,6 +404,7 @@ clientkeys = gears.table.join(
             c:raise()
         end ,
         {description = "(un)maximize horizontally", group = "client"}),
+    -- CUSTOM
     awful.key({ "Mod1",           }, "Tab",
       function ()
           switcher.switch( 1, "Mod1", "Alt_L", "Shift", "Tab")
@@ -400,7 +412,15 @@ clientkeys = gears.table.join(
     awful.key({ "Mod1", "Shift"   }, "Tab",
       function ()
           switcher.switch(-1, "Mod1", "Alt_L", "Shift", "Tab")
-      end)
+      end),
+    awful.key({ }, "Print", function () awful.util.spawn("scrot -e 'mv $f ~/screenshots/ 2>/dev/null'", false) end),
+    awful.key({ }, "XF86MonBrightnessUp",
+        function ()
+        os.execute("ts_lighter.sh") end,
+        {description = "lighter", group = "ts"}),
+    awful.key({ }, "XF86MonBrightnessDown", function ()
+        os.execute("/bin/ts_darker.sh") end,
+        {description = "darker", group = "ts"})
 )
 
 -- Bind all key numbers to tags.
@@ -411,11 +431,13 @@ for i = 1, 9 do
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
                   function ()
-                        local screen = awful.screen.focused()
-                        local tag = screen.tags[i]
-                        if tag then
-                           tag:view_only()
-                        end
+                        --local screen = awful.screen.focused()
+                        for s = 1, screen:count() do
+				local tag = screen[s].tags[i]
+                        	if tag then
+                        	   tag:view_only()
+                        	end
+			end
                   end,
                   {description = "view tag #"..i, group = "tag"}),
         -- Toggle tag display.
@@ -597,7 +619,74 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
--- }}}
+
+--CUSTOM WIDGETS
+local function battery_state()
+    os.execute("/bin/ts_battery.sh")
+    batchar = io.open("batchar")
+    batchartxt = batchar:read()
+    if batchartxt == "Dis" then
+        batpctxt = io.open("batpc")
+        batpczahl = batpctxt:read()
+        lengthbat = string.len(batpczahl) +1 -1  -- only to secure that lengthbat is of type number
+        if lengthbat == 1 then
+            os.execute("/bin/ts_bat_time_low.sh") -- percent is only 1 digit
+        else
+            os.execute("/bin/ts_bat_time.sh")
+        end
+        battime = io.open("battime")
+        battimetxt = " " .. battime:read() .. " "
+        bath = io.open("bath")
+        bathtxt = bath:read(1)
+        batm = io.open("batm")
+        batmtxt = batm:read(1)
+    end
+end
+local function get_battery_state()
+    battery_state()
+    -- show remaining timme if discharging
+    if batchartxt == "Dis" then
+        -- change backgroundcolor if only twenty minutes left
+        if bathtxt == "0" and (batmtxt == "0" or batmtxt == "1") then
+            battxtwidget.widget.markup = "<b> Remaining: " .. battimetxt .. "</b>"
+            battxtwidget.widget.font = "\"Liberation Serif\", 16"
+            battxtwidget.bg = '#ff0000'
+        else
+            battxtwidget.widget.markup =  ' Remaining: ' .. battimetxt
+        end
+    else
+            battxtwidget.widget.markup = ""
+    end
+end
+
+
+battery_state()
+ 
+batwidget  = wibox.widget {
+    {
+        max_value     = 100,
+        value         = batpczahl,
+        widget        = wibox.widget.progressbar,
+    },
+    forced_width  = 15,
+    direction     = 'east',
+    layout        = wibox.container.rotate,
+}
+battxtwidget = wibox.widget{
+    {
+        markup = markuptxt,
+        widget = wibox.widget.textbox
+    },
+    bg     = '#ffffff00',
+    layout = wibox.container.background
+}
+
+gears.timer.start_new (61, 
+    function() 
+        get_battery_state()    
+        return true
+    end
+)
 
 awful.spawn("thunderbird")
 awful.spawn("skype")
