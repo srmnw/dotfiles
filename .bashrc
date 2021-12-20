@@ -121,3 +121,10 @@ parse_git_branch() {
 }
 
 export PS1="\u@\h \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]$ "
+
+# If ~/.inputrc doesn't exist yet: First include the original /etc/inputrc
+# so it won't get overriden
+if [ ! -a ~/.inputrc ]; then echo '$include /etc/inputrc' > ~/.inputrc; fi
+
+# Add shell-option to ~/.inputrc to enable case-insensitive tab completion
+echo 'set completion-ignore-case On' >> ~/.inputrc
