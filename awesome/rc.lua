@@ -25,6 +25,10 @@ local has_fdo, freedesktop = pcall(require, "freedesktop")
 -- CUSTOM requires
 local switcher = require("awesome-switcher")
 local xrandr = require("xrandr")
+local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
+
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -56,7 +60,7 @@ end
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "x-terminal-emulator"
+terminal = "konsole"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -192,7 +196,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "dev", "com", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "dev1", "dev2", "com", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -235,6 +239,11 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
+            volume_widget{
+                widget_type = 'arc'
+            },
+            battery_widget(),
+            logout_menu_widget(),
             mytextclock,
             s.mylayoutbox,
         },
@@ -314,9 +323,9 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
-    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
+    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.01)          end,
               {description = "increase master width factor", group = "layout"}),
-    awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
+    awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.01)          end,
               {description = "decrease master width factor", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
               {description = "increase the number of master clients", group = "layout"}),
@@ -544,8 +553,12 @@ awful.rules.rules = {
     { rule_any = {type = { "normal", "dialog" }
       }, properties = { titlebars_enabled = true }
     },
-    { rule = { class = "Terminator" },
-      properties = { screen = 1, tag = "dev" } },
+    { rule = { class = "Konsole" },
+      properties = { screen = 1, tag = "dev1" } },
+    { rule = { class = "Firefox" },
+      properties = { screen = 1, tag = "dev1" } },
+    { rule = { class = "Qt Creator" },
+      properties = { screen = 2, tag = "dev1" } },
     { rule = { class = "Thunderbird" },
       properties = { screen = 1, tag = "com" } },
     { rule = { class = "Skype" },
@@ -689,4 +702,8 @@ gears.timer.start_new (61,
 )
 
 awful.spawn("thunderbird")
-awful.spawn("skype")
+awful.spawn("skypeforlinux")
+awful.spawn("firefox")
+awful.spawn("konsole")
+awful.spawn("qtcreator")
+awful.spawn("autorandr --load office_mobile")
