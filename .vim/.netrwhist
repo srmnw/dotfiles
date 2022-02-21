@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =4
+let g:netrw_dirhist_4='/home/asarmanow/work/dev/sdr2/bench/bench2022-02-08T18-20-48/results'
+let g:netrw_dirhist_3='/home/asarmanow/work/dev/sdr2/bench/bench2022-02-08T18-20-48'
+let g:netrw_dirhist_2='/home/asarmanow/work/dev/sdr2/bench'
+let g:netrw_dirhist_1='/home/asarmanow/work/dev/sdr2/bench/bench2022-02-08T17-57-39/results'
+let g:netrw_dirhist_0='/home/asarmanow/work/dev/sdr2/bench/bench2022-02-08T17-57-39'
+let g:netrw_dirhist_9='/home/asarmanow/work/dev/sdr2/bench'
+let g:netrw_dirhist_8='/home/asarmanow/work/dev/sdr2/bench/bench2022-02-08T16-48-31/results'
+let g:netrw_dirhist_7='/home/asarmanow/work/dev/sdr2/bench/bench2022-02-08T16-48-31'
+let g:netrw_dirhist_6='/home/asarmanow/work/dev/sdr2/bench'
+let g:netrw_dirhist_5='/home/asarmanow/work/dev/sdr2/bench/bench2022-02-08T16-48-31/results'
