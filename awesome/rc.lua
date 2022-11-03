@@ -710,3 +710,11 @@ awful.spawn("firefox")
 awful.spawn("konsole")
 awful.spawn("qtcreator")
 awful.spawn("autorandr --load office_mobile")
+
+collectgarbage("setpause", 160)
+collectgarbage("setstepmul", 400)
+
+gears.timer.start_new(10, function()
+	collectgarbage("step", 20000)
+	return true
+end)
