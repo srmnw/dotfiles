@@ -32,11 +32,12 @@ for f in "${dotfiles[@]}"; do
 		echo ">>>>>> $f has following diff:"
 		echo "$DIFF"
 		while true; do
-			read -n 1 -p ">>>>>> update $f file in repo?[y/n]:" yn
+			read -n 1 -p ">>>>>> update $f file in repo?[y/n/p]:" yn
 			case $yn in
-				[Yy]* ) cp ~/$f $f; break;;
+				[Yy]* ) cp ~/$f $f; git add $f; break;;
+				[Pp]* ) cp ~/$f $f; git add -p $f; break;;
 				[Nn]* ) break;;
-				*     ) echo "please answer yes or no";;
+				*     ) echo "please answer yes or no or partial";;
 			esac
 		done
 	fi
