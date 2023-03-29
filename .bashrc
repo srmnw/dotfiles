@@ -87,11 +87,6 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -128,3 +123,14 @@ if [ ! -a ~/.inputrc ]; then echo '$include /etc/inputrc' > ~/.inputrc; fi
 
 # Add shell-option to ~/.inputrc to enable case-insensitive tab completion
 echo 'set completion-ignore-case On' >> ~/.inputrc
+
+# Cycle through tab autocomplete suggestions
+bind "TAB:menu-complete"
+# bind "SHIFT-TAB:menu-complete-backward"
+bind "set show-all-if-ambiguous on"
+bind "set menu-complete-display-prefix on"
+
+
+# machine specific
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/vmware-tools-distrib/lib/lib32/libgobject-2.0.so.0
+export PATH=~/.local/bin:"$PATH"
