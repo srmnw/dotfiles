@@ -35,7 +35,7 @@ for f in "${dotfiles[@]}"; do
 			read -n 1 -p ">>>>>> update $f file in repo?[y/n/p]:" yn
 			case $yn in
 				[Yy]* ) cp ~/$f $f; git add $f; break;;
-				[Pp]* ) cp ~/$f $f; git add -p $f; break;;
+				[Pp]* ) cp ~/$f $f; git add -p $f; git checkout -- $f; break;;
 				[Nn]* ) break;;
 				*     ) echo "please answer yes or no or partial";;
 			esac
