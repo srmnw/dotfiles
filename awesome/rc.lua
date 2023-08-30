@@ -28,7 +28,8 @@ local xrandr = require("xrandr")
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
-
+local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
+local custom = require("custom")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -38,6 +39,11 @@ if awesome.startup_errors then
                      title = "Oops, there were errors during startup!",
                      text = awesome.startup_errors })
 end
+
+-- HELPERS
+-- detect screen count and advice either id 1 or 2
+screen_idx2 = screen:count() > 1 and 2 or 1
+
 
 -- Handle runtime errors after startup
 do
@@ -196,7 +202,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "dev1", "dev2", "com", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "dev1", "dev2", "com", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[2])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -422,7 +428,7 @@ clientkeys = gears.table.join(
       function ()
           switcher.switch(-1, "Mod1", "Alt_L", "Shift", "Tab")
       end),
-    awful.key({ }, "Print", function () awful.util.spawn("scrot -e 'mv $f ~/screenshots/ 2>/dev/null'", false) end),
+    awful.key({ }, "Print", function () awful.util.spawn("spectacle", false) end),
     awful.key({ }, "XF86MonBrightnessUp",
         function ()
         os.execute("ts_lighter.sh") end,
@@ -432,7 +438,26 @@ clientkeys = gears.table.join(
         {description = "darker", group = "ts"}),
     awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 2%+", false) end),
     awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 2%-", false) end),
-    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer set Master toggle", false) end)
+    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer set Master toggle", false) end),
+    awful.key({ "Control" }, "h", function(c)
+	c.floating = true
+	local geo = screen[1].geometry
+	geo.x2 = geo.x + geo.width
+	geo.y2 = geo.y + geo.height
+	for s in screen do
+	    local geo2 = s.geometry
+	    geo.x = math.min(geo.x, geo2.x)
+	    geo.y = math.min(geo.y, geo2.y)
+	    geo.x2 = math.max(geo.x2, geo2.x + geo2.width)
+	    geo.y2 = math.max(geo.y2, geo2.y + geo2.height)
+	end
+	c:geometry{
+	    x = geo.x,
+	    y = geo.y,
+	    width = geo.x2 - geo.x,
+	    height = geo.y2 - geo.y
+	}
+	end)
 )
 
 -- Bind all key numbers to tags.
@@ -559,13 +584,15 @@ awful.rules.rules = {
     { rule = { class = "Konsole" },
       properties = { screen = 1, tag = "dev1" } },
     { rule = { class = "Firefox" },
-      properties = { screen = 1, tag = "dev1" } },
-    { rule = { class = "Qt Creator" },
-      properties = { screen = 2, tag = "dev1" } },
-    { rule = { class = "Thunderbird" },
+      properties = { screen = screen_idx2, tag = "dev1" } },
+    --{ rule = { class = "Qt Creator" },
+    --  properties = { screen = 2, tag = "dev1" } },
+    { rule = { class = "Prospect Mail" },
+      properties = { screen = screen_idx2, tag = "com"} },
+    { rule = { class = "Microsoft Teams" },
       properties = { screen = 1, tag = "com" } },
-    { rule = { class = "Skype" },
-      properties = { screen = 1, tag = "com" } },
+    { rule = { class = "obsidian" },
+      properties = { screen = 1, tag = "dev2" } },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
@@ -704,11 +731,18 @@ gears.timer.start_new (61,
     end
 )
 
-awful.spawn("thunderbird")
-awful.spawn("skypeforlinux")
-awful.spawn("firefox")
-awful.spawn("konsole")
-awful.spawn("qtcreator")
+local cw = calendar_widget({placement = 'top_right'})
+mytextclock:connect_signal("button::press",
+    function(_, _, _, button)
+        if button == 1 then cw.toggle() end
+    end)
+
+
+--awful.spawn("setxkbmap -layout us")
+--awful.spawn("firefox")
+--awful.spawn("prospect-mail")
+--awful.spawn("teams")
+--awful.spawn("konsole")
 awful.spawn("autorandr --load office_mobile")
 
 collectgarbage("setpause", 160)
