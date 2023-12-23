@@ -2,13 +2,17 @@ set hlsearch
 
 let g:netrw_localrmdir='rm -r'
 
-set tabstop=8
-set softtabstop=8
-set shiftwidth=8
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
 set nu
 set clipboard=unnamed
 set ignorecase
 set smartcase
+
+" show search count
+set shortmess-=S
 
 "partial one
 
@@ -57,6 +61,9 @@ Plugin 'preservim/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+Plugin 'morhetz/gruvbox'
+Plugin 'google/vim-searchindex'
+Plugin 'kkoomen/vim-doge'
 " Plugin 'dense-analysis/ale'
 " Plugin 'vim-airline/vim-airline'
 " Plugin 'vim-airline/vim-airline-themes'
@@ -226,7 +233,7 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 
-
+" PYTHON =====================================================================
 " PYTHON auto indent
 au BufNewFile,BufRead *.py
 \ set tabstop=4
@@ -243,6 +250,8 @@ set backspace=indent,eol,start
 
 set ruler               " show line and column number
 syntax on               " syntax highlighting
+autocmd vimenter * ++nested colorscheme gruvbox " color scheme from gruvbox
+" colorscheme guvbox
 set showcmd             " show (partial) command in status line
 
 " PYTHON virutalenv support
@@ -264,10 +273,19 @@ let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 " C/C++ =======================================================================
 " C/C++ auto indent
 au BufNewFile,BufRead *.c,*.h,*.cpp,*.cc
+    \ set expandtab |
     \ set textwidth=80 |
     \ set tabstop=8 |
     \ set softtabstop=8 |
     \ set shiftwidth=8
+
+" JSON =======================================================================
+" JSON auto indent
+au BufNewFile,BufRead *.json
+    \ set expandtab |
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4
 
 " NERDTree ====================================================================
 nnoremap <leader>n :NERDTreeFocus<CR>
@@ -284,7 +302,7 @@ autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTa
 autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
 			\ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
-" Powerline ====================================================================
+" Powerline ==================================================================
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
 python3 del powerline_setup
@@ -298,3 +316,13 @@ if &term =~ '^screen'
     execute "set <xRight>=\e[1;*C"
     execute "set <xLeft>=\e[1;*D"
 endif
+
+
+" Vim-Doge ===================================================================
+nmap <silent> <Leader>d <Plug>(doge-generate)
+" nmap <silent> <TAB> <Plug>(doge-comment-jump-forward)
+" nmap <silent> <S-TAB> <Plug>(doge-comment-jump-backward)
+" imap <silent> <TAB> <Plug>(doge-comment-jump-forward)
+" imap <silent> <S-TAB> <Plug>(doge-comment-jump-backward)
+" smap <silent> <TAB> <Plug>(doge-comment-jump-forward)
+" smap <silent> <S-TAB> <Plug>(doge-comment-jump-backward)
