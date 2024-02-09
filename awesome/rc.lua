@@ -434,7 +434,7 @@ clientkeys = gears.table.join(
         os.execute("ts_lighter.sh") end,
         {description = "lighter", group = "ts"}),
     awful.key({ }, "XF86MonBrightnessDown", function ()
-        os.execute("/bin/ts_darker.sh") end,
+        os.execute("ts_darker.sh") end,
         {description = "darker", group = "ts"}),
     awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 2%+", false) end),
     awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 2%-", false) end),
