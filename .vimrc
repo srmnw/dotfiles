@@ -22,6 +22,9 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" remove trailing whitespaces
+nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+
 " auto complete brackets etc.
 " inoremap ( ()<left>
 " inoremap [ []<left>
