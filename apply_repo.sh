@@ -31,16 +31,8 @@ for f in "${dotfiles[@]}"; do
     done
 done
 
-echo "Installing directories...\n"
-for d in "${install_dirs[@]}"; do
-    printf "\n"
+# install vim plugins
+vim +PluginInstall +qall
 
-    while true; do
-        read -n 1 -p ">>>>>> apply $f directory to filesystem?[y/n]:" yn
-        case $yn in
-            [Yy]* ) cp -r $f /$f; break;;
-            [Nn]* ) break;;
-            *     ) echo "please answer yes or no";;
-        esac
-    done
-done
+# install tmux plugins
+/.tmux/plugins/tpm/bin/install_plugins
