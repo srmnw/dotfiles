@@ -1,10 +1,11 @@
 #! /usr/bin/bash
 
-declare -a dotfiles=(".bashrc"
-		  ".bash_aliases"
-		  ".tmux.conf"
-		  ".vimrc"
-		 )
+declare -a dotfiles=(
+    ".bashrc"
+    ".bash_aliases"
+    ".tmux.conf"
+    ".vimrc"
+)
 
 declare -a dir=(""
 	       )
