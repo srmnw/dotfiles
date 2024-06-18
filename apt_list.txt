@@ -7,8 +7,6 @@ diffutils
 diffstat
 doxygen
 findutils
-firefox-locale-en
-fonts-indic
 gdb
 git
 git-email
