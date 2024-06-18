@@ -1,0 +1,19 @@
+# This is Git's per-user configuration file.
+[user]
+	name = Alexander Sarmanow
+	email = a.sarmanow@televic.com
+# Please adapt and uncomment the following lines:
+#	name = Alexander Sarmanow
+#	email = a.sarmanow@televic.com
+[alias]
+	logall = log --graph --all --oneline
+	change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f"
+[core]
+	autocrlf = false
+	safecrlf = false
+	excludesFile = /home/sarmanowa/.gitignore
+	eol = lf
+[pull]
+	rebase = true
+[init]
+	defaultBranch = main
