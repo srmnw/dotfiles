@@ -1,5 +1,9 @@
 #! /usr/bin/bash
 
+if $(node -v) == 0; then
+    curl -sL install-node.vercel.app/lts | sudo bash
+fi
+
 declare -a dotfiles=(
     ".bashrc"
     ".bash_aliases"
