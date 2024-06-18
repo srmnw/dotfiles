@@ -5,7 +5,6 @@ declare -a dotfiles=(
     ".bash_aliases"
     ".tmux.conf"
     ".vimrc"
-    ".gitconfig"
 )
 
 declare -a install_dirs=(
