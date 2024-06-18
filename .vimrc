@@ -40,6 +40,18 @@ nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 " inoremap ``` ```<cr>```<up><cr>
 "inoremap ``` ```<cr>```
 
+" folding setings
+" set foldmethod=indent
+" set foldlevel=1
+" set foldclose=all
+" shortcuts:
+" zo - opens folds
+" zc - closes fold
+" zm - increases auto fold depth
+" zr - reduces auto fold depth
+
+
+
 " C/C++ multiline string
 set formatoptions+=r
 
@@ -105,11 +117,11 @@ endif
 " no select by `"suggest.noselect": true` in your configuration file
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config
-inoremap <silent><expr> <TAB>
+inoremap <silent><expr> <Tab>
       \ coc#pum#visible() ? coc#pum#next(1) :
       \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <expr><S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 function! CheckBackspace() abort
   let col = col('.') - 1
@@ -258,14 +270,14 @@ autocmd vimenter * ++nested colorscheme gruvbox " color scheme from gruvbox
 set showcmd             " show (partial) command in status line
 
 " PYTHON virutalenv support
-python3 << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  exec(open(activate_this, dict(__file__=activate_this)).read())
-EOF
+" python3 << EOF
+" import os
+" import sys
+" if 'VIRTUAL_ENV' in os.environ:
+"   project_base_dir = os.environ['VIRTUAL_ENV']
+"   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"   exec(open(activate_this, dict(__file__=activate_this)).read())
+" EOF
 " addituonal config
 let python_highlight_all=1
 syntax on
