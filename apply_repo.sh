@@ -30,3 +30,8 @@ for f in "${dotfiles[@]}"; do
 	done
 done
 
+# install vim plugins
+vim +PluginInstall +qall
+
+# install tmux plugins
+/.tmux/plugins/tpm/bin/install_plugins
