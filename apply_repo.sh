@@ -1,6 +1,7 @@
 #! /usr/bin/bash
 
-if $(node -v) == 0; then
+if ! node -v &> /dev/null; then
+    echo "installing nodejs..."
     curl -sL install-node.vercel.app/lts | sudo bash
 fi
 
