@@ -13,11 +13,11 @@ create()
 	fi
 }
 
-create vimrc ~/.vimrc
+create .vimrc ~/.vimrc
 create .vim ~/.vim
 create .bashrc ~/.bashrc
 create .bash_aliases ~/.bash_aliases
 create .gitconfig ~/.gitconfig
 mkdir -p ~/.config
 create awesome ~/.config/awesome
-create tmux.conf ~/.tmux.conf
+create .tmux.conf ~/.tmux.conf
