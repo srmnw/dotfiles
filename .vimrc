@@ -1,4 +1,5 @@
 set hlsearch
+set background=dark
 
 let g:netrw_localrmdir='rm -r'
 
