@@ -16,6 +16,7 @@ git-man
 grep
 gzip
 htop
+i3lock
 inkscape
 iperf
 linux-perf

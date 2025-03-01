@@ -254,6 +254,7 @@ awful.screen.connect_for_each_screen(function(s)
             }),
             mytextclock,
             s.mylayoutbox,
+            logout_menu_widget(),
         },
     }
 end)

@@ -52,10 +52,10 @@ local function worker(user_args)
     local font = args.font or beautiful.font
 
     local onlogout = args.onlogout or function () awesome.quit() end
-    local onlock = args.onlock or function() awful.spawn.with_shell("i3lock") end
+    local onlock = args.onlock or function() awful.spawn.with_shell("lock") end
     local onreboot = args.onreboot or function() awful.spawn.with_shell("reboot") end
-    local onsuspend = args.onsuspend or function() awful.spawn.with_shell("systemctl suspend") end
-    local onhibernate = args.onhibernate or function() awful.spawn.with_shell("systemctl hibernate") end
+    local onsuspend = args.onsuspend or function() awful.spawn.with_shell("lock; systemctl suspend") end
+    local onhibernate = args.onhibernate or function() awful.spawn.with_shell("lock; systemctl hibernate") end
     local onpoweroff = args.onpoweroff or function() awful.spawn.with_shell("shutdown now") end
 
     local menu_items = {

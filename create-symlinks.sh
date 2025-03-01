@@ -13,6 +13,8 @@ create()
 	fi
 }
 
+create .scripts/lock ~/.local/bin/lock
+
 create .vimrc ~/.vimrc
 create .vim ~/.vim
 create .bashrc ~/.bashrc
