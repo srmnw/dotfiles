@@ -26,7 +26,7 @@ local has_fdo, freedesktop = pcall(require, "freedesktop")
 local switcher = require("awesome-switcher")
 local xrandr = require("xrandr")
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
-local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
 local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
 local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
 local custom = require("custom")
@@ -248,8 +248,10 @@ awful.screen.connect_for_each_screen(function(s)
             volume_widget{
                 widget_type = 'arc'
             },
-            battery_widget(),
-            logout_menu_widget(),
+            batteryarc_widget({
+                show_current_level = true,
+                arc_thinkess = 1,
+            }),
             mytextclock,
             s.mylayoutbox,
         },
@@ -662,74 +664,6 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
-
---CUSTOM WIDGETS
-local function battery_state()
-    os.execute("/bin/ts_battery.sh")
-    batchar = io.open("batchar")
-    batchartxt = batchar:read()
-    if batchartxt == "Dis" then
-        batpctxt = io.open("batpc")
-        batpczahl = batpctxt:read()
-        lengthbat = string.len(batpczahl) +1 -1  -- only to secure that lengthbat is of type number
-        if lengthbat == 1 then
-            os.execute("/bin/ts_bat_time_low.sh") -- percent is only 1 digit
-        else
-            os.execute("/bin/ts_bat_time.sh")
-        end
-        battime = io.open("battime")
-        battimetxt = " " .. battime:read() .. " "
-        bath = io.open("bath")
-        bathtxt = bath:read(1)
-        batm = io.open("batm")
-        batmtxt = batm:read(1)
-    end
-end
-local function get_battery_state()
-    battery_state()
-    -- show remaining timme if discharging
-    if batchartxt == "Dis" then
-        -- change backgroundcolor if only twenty minutes left
-        if bathtxt == "0" and (batmtxt == "0" or batmtxt == "1") then
-            battxtwidget.widget.markup = "<b> Remaining: " .. battimetxt .. "</b>"
-            battxtwidget.widget.font = "\"Liberation Serif\", 16"
-            battxtwidget.bg = '#ff0000'
-        else
-            battxtwidget.widget.markup =  ' Remaining: ' .. battimetxt
-        end
-    else
-            battxtwidget.widget.markup = ""
-    end
-end
-
-
-battery_state()
- 
-batwidget  = wibox.widget {
-    {
-        max_value     = 100,
-        value         = batpczahl,
-        widget        = wibox.widget.progressbar,
-    },
-    forced_width  = 15,
-    direction     = 'east',
-    layout        = wibox.container.rotate,
-}
-battxtwidget = wibox.widget{
-    {
-        markup = markuptxt,
-        widget = wibox.widget.textbox
-    },
-    bg     = '#ffffff00',
-    layout = wibox.container.background
-}
-
-gears.timer.start_new (61, 
-    function() 
-        get_battery_state()    
-        return true
-    end
-)
 
 local cw = calendar_widget({placement = 'top_right'})
 mytextclock:connect_signal("button::press",

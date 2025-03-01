@@ -85,7 +85,11 @@ local function worker(user_args)
         }
     end
 
-    local function update_widget(widget, stdout)
+    local function update_widget(widget, stdout, stderr)
+        --if stderr ~= nil or stderr ~= '' then
+        --    return
+        --end
+
         local charge = 0
         local status
         for s in stdout:gmatch("[^\r\n]+") do
