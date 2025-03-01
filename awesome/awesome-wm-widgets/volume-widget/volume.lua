@@ -163,7 +163,7 @@ local function worker(user_args)
 
     local args = user_args or {}
 
-    local mixer_cmd = args.mixer_cmd or 'pavucontrol-qt'
+    local mixer_cmd = args.mixer_cmd or 'gnome-control-center sound'
     local widget_type = args.widget_type
     local refresh_rate = args.refresh_rate or 1
     local step = args.step or 5

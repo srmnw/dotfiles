@@ -66,7 +66,7 @@ end
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "konsole"
+terminal = "gnome-terminal"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -584,7 +584,7 @@ awful.rules.rules = {
     { rule_any = {type = { "normal", "dialog" }
       }, properties = { titlebars_enabled = true }
     },
-    { rule = { class = "Konsole" },
+    { rule = { class = "gnome-terminal" },
       properties = { screen = 1, tag = "dev1" } },
     { rule = { class = "Firefox" },
       properties = { screen = screen_idx2, tag = "dev1" } },
