@@ -1,6 +1,8 @@
+arandr
 autorandr
 awesome-extra
 awesome
+borgbackup
 build-essential
 curl
 diffutils
@@ -13,10 +15,11 @@ git-email
 git-man
 grep
 gzip
+htop
 inkscape
 iperf
-kate
 linux-perf
+libreoffice
 magic-wormhole
 make
 ncurses-base
@@ -29,9 +32,8 @@ scrot
 tcpdump
 terminator
 tldr
+tmux
 traceroute
-vim-addon-manager
-vim-youcompleteme
 vim
 wireguard
 xbacklight
