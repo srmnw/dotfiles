@@ -677,7 +677,7 @@ mytextclock:connect_signal("button::press",
 --awful.spawn("prospect-mail")
 --awful.spawn("teams")
 --awful.spawn("konsole")
-awful.spawn("autorandr --load office_mobile")
+--awful.spawn("autorandr --load office_mobile")
 
 collectgarbage("setpause", 160)
 collectgarbage("setstepmul", 400)
