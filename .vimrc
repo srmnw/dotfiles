@@ -6,7 +6,7 @@ let g:netrw_localrmdir='rm -r'
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set expandtab
+set noexpandtab
 set nu
 set clipboard=unnamed
 set ignorecase
