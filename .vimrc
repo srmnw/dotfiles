@@ -261,6 +261,7 @@ au BufNewFile,BufRead *.py
 \ autoindent
 \ fileformat=unix
 \ encoding=utf-8
+\ colorcolumn=80
 
 " make backspaces more powerfull
 set backspace=indent,eol,start
@@ -290,11 +291,12 @@ let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 " C/C++ =======================================================================
 " C/C++ auto indent
 au BufNewFile,BufRead *.c,*.h,*.cpp,*.cc
-    \ set expandtab |
+    \ set noexpandtab |
     \ set textwidth=80 |
     \ set tabstop=8 |
     \ set softtabstop=8 |
-    \ set shiftwidth=8
+    \ set shiftwidth=8 |
+    \ set colorcolumn=80
 
 " JSON =======================================================================
 " JSON auto indent
