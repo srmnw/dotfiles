@@ -11,6 +11,7 @@ set nu
 set clipboard=unnamed
 set ignorecase
 set smartcase
+set selection=exclusive
 
 " show search count
 set shortmess-=S
