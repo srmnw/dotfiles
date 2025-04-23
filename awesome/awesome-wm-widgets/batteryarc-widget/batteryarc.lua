@@ -86,9 +86,10 @@ local function worker(user_args)
     end
 
     local function update_widget(widget, stdout, stderr)
-        --if stderr ~= nil or stderr ~= '' then
-        --    return
-        --end
+        if stderr ~= nil or stderr ~= '' then
+            text.text = '--'
+            return
+        end
 
         local charge = 0
         local status
