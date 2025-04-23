@@ -80,7 +80,7 @@ Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 Plugin 'morhetz/gruvbox'
 Plugin 'google/vim-searchindex'
-Plugin 'kkoomen/vim-doge'
+"Plugin 'kkoomen/vim-doge'
 " Plugin 'dense-analysis/ale'
 " Plugin 'vim-airline/vim-airline'
 " Plugin 'vim-airline/vim-airline-themes'
