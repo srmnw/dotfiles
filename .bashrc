@@ -122,7 +122,7 @@ parse_git_branch() {
      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
-export PS1="\e[33m\u@\h\e[m \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]$\n╰ "
+export PS1="\e[33m\u@\h\e[m \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\] $\n╰ "
 
 # If ~/.inputrc doesn't exist yet: First include the original /etc/inputrc
 # so it won't get overriden
