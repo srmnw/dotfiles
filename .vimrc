@@ -292,7 +292,7 @@ let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 " C/C++ auto indent
 au BufNewFile,BufRead *.c,*.h,*.cpp,*.cc
     \ set noexpandtab |
-    \ set textwidth=80 |
+    "\ set textwidth=80 |
     \ set tabstop=8 |
     \ set softtabstop=8 |
     \ set shiftwidth=8 |
