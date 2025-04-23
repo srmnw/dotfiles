@@ -3,6 +3,8 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -lF'
 
+alias rm='rm -i'
+
 alias ip='ip -c'
 
 alias diff='diff --color'
@@ -12,3 +14,6 @@ alias gitfix='git diff --name-only | uniq | xargs vim'
 
 # grep
 alias grep='grep --exclude-dir={__pycache__,*mypy_cache} -I --color'
+
+# minicom
+alias minicom='sudo minicom -con'
