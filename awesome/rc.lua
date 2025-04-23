@@ -583,12 +583,10 @@ awful.rules.rules = {
     { rule_any = {type = { "normal", "dialog" }
       }, properties = { titlebars_enabled = true }
     },
-    { rule = { class = "gnome-terminal" },
-      properties = { screen = 1, tag = "dev1" } },
-    { rule = { class = "Firefox" },
-      properties = { screen = screen_idx2, tag = "dev1" } },
-    --{ rule = { class = "Qt Creator" },
-    --  properties = { screen = 2, tag = "dev1" } },
+    --{ rule = { class = terminal },
+    --  properties = { screen = 1, tag = "dev1" } },
+    --{ rule = { class = "Firefox" },
+    --  properties = { screen = screen_idx2, tag = "dev1" } },
     { rule = { class = "Prospect Mail" },
       properties = { screen = screen_idx2, tag = "com"} },
     { rule = { class = "Microsoft Teams" },
