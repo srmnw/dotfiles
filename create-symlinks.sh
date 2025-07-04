@@ -8,8 +8,9 @@ create()
 	then
 		echo "$2 already exist, skipping this..."
 	else
-		ln -s $dotdir/$1 $2
-		echo "created link from $dotdir/$1 to $2"
+		ln -s $dotdir/$1 $2\
+            && echo "created link from $dotdir/$1 to $2"\
+            || echo -e "\t error: failed creating symlink for $1"
 	fi
 }
 
