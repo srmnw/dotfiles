@@ -14,7 +14,7 @@ create()
 	fi
 }
 
-create .scripts/lock ~/.local/bin/lock
+create scripts/lock ~/.local/bin/lock
 
 create .vimrc ~/.vimrc
 create .vim ~/.vim
